@@ -1,3 +1,26 @@
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-turma-81"    # seu bucket
+    key            = "terraform.tfstate"     # caminho do state no S3
+    region         = "us-east-1"             # região do bucket
+  }
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.30.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.7.2"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
 data "aws_vpc" "postech_vpc" {
   filter {
     name   = "tag:Name"
